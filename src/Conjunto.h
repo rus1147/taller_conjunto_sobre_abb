@@ -65,6 +65,7 @@ class Conjunto
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
 
+        void limpiar();
 };
 
 template<class T>

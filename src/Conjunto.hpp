@@ -1,9 +1,23 @@
 
 template <class T>
 Conjunto<T>::Conjunto() {
-    // Completar
+    _raiz=NULL;
+
 }
 
+template <typename T>
+void Conjunto<T>::limpiar(){
+    Nodo* p=_raiz;
+    while(p!=NULL){
+        Nodo* q=p->der;
+        Nodo* t=p->izq;
+        delete p;
+        p->der=q;
+        p->izq=t;
+    }
+    _raiz=NULL;
+
+}
 template <class T>
 Conjunto<T>::~Conjunto() { 
     // Completar
@@ -17,7 +31,7 @@ bool Conjunto<T>::pertenece(const T& clave) const {
 
 template <class T>
 void Conjunto<T>::insertar(const T& clave) {
-    assert(false);
+
 }
 
 template <class T>
@@ -42,8 +56,7 @@ const T& Conjunto<T>::maximo() const {
 
 template <class T>
 unsigned int Conjunto<T>::cardinal() const {
-    assert(false);
-    return 0;
+
 }
 
 template <class T>
@@ -51,3 +64,11 @@ void Conjunto<T>::mostrar(std::ostream&) const {
     assert(false);
 }
 
+/*
+
+
+
+
+
+
+ */
