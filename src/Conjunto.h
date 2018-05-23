@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <string>
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -66,6 +67,9 @@ class Conjunto
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
         Nodo* buscar_Nodo(const T& k);
+        //Nodo* buscar_valor_Nodo(const T& k);
+        Nodo * padre(Nodo* q)const;
+        T findMinimo(Nodo *raiz)const;
 
         void limpiar();
 
