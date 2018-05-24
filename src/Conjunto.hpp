@@ -1,4 +1,14 @@
+#include "Conjunto.h"
 
+template <class T>
+Conjunto<T>::Nodo::~Nodo() {
+    if(izq!=NULL){
+        delete izq;
+    }
+    if(der!=NULL){
+        delete der;
+    }
+}
 template <class T>
 Conjunto<T>::Conjunto() {
     _raiz=NULL;
@@ -6,16 +16,10 @@ Conjunto<T>::Conjunto() {
 
 template <class T>
 Conjunto<T>::~Conjunto() {
-    if(minimo()==NULL) {
-        _raiz=NULL;
-    }else{
-        while(_raiz!=NULL){
-            Nodo*p=buscar_Nodo(minimo());
-            delete p;
-            _raiz=NULL;
-        }
+    if(_raiz!=NULL){
+        delete _raiz;
     }
-    _raiz=NULL;
+
 }
 
 template <class T>
@@ -42,18 +46,40 @@ void Conjunto<T>::insertar(const T& clave) {
         if(p->valor==clave){
             break;
         } else if(p->valor<clave){
-            p=p->der;
-        } else{
-            p=p->izq;
+            if(p->der==NULL){
+            Nodo * n= new Nodo(clave);
+            p->der=n;
+            break;}
+            else{
+                p=p->der;
+                if(p->valor<clave){
+                Nodo * n= new Nodo(clave);
+                p->der=n;} else{
+                    Nodo * n= new Nodo(clave);
+                    p->izq=n;
+                }
+                break;
+            }
+        } else if(p->valor>clave){
+            if(p->izq==NULL){
+            Nodo * n= new Nodo(clave);
+            p->izq=n;
+            break;
+            } else{
+                Nodo * n= new Nodo(clave);
+                p->izq->der=n;
+                break;
+            }
         }
     }
+        /*
     if(padre(p)->valor<clave){
         Nodo * n= new Nodo(clave);
         padre(p)->izq=n;
     } else{
         Nodo* n=new Nodo(clave);
         padre(p)->der=n;
-        }
+        }*/
     }
 }
 
@@ -135,26 +161,29 @@ unsigned int Conjunto<T>::cardinal() const {
     Nodo* r2=_raiz;
     int i=0;
     int j=0;
-    while(r1!=NULL && r1->der!=NULL && r1->izq!=NULL){
+    if(r1!=NULL){
+        j=1;
+    }
+    while(r1!=NULL){
+        if(r1->izq!=NULL){
         if(r1->valor>r1->izq->valor){
             r1=r1->izq;
             i++;
-        } else{
+        }} else if(r1->der!=NULL){
             r1=r1->der;
             i++;
-        }
+        } else{r1=NULL;}
     }
-    while(r2!=NULL && r1->der!=NULL && r1->izq!=NULL){
-        if(r2->valor<r2->izq->valor){
+    while(r2!=NULL){
+        if(r2->der!=NULL){
+        if(r2->valor<r2->der->valor){
             r2=r2->der;
             j++;
-        } else{
+        }}else if(r2->izq!=NULL){
             r2=r2->izq;
             j++;
-        }
-    }
-    if(r1!=NULL){
-        j=1;
+        } else{
+        r2=NULL;}
     }
     return j+i;
 }
@@ -181,8 +210,11 @@ void Conjunto<T>::limpiar(){
 }
 
 template <typename T>
-typename Conjunto<T>::Nodo* Conjunto<T>::buscar_Nodo(const T& k){
+typename Conjunto<T>::Nodo* Conjunto<T>::buscar_Nodo(const T k){
     Nodo* r=_raiz;
+    if(k==NULL){
+        return NULL;
+    } else{
     while(r!=NULL){
         if(r->valor!=k){
             if(r->valor>k){
@@ -193,7 +225,7 @@ typename Conjunto<T>::Nodo* Conjunto<T>::buscar_Nodo(const T& k){
         } else{
             return r;
         }
-    }
+    }}
     return r;
 }
 /*

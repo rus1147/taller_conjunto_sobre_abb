@@ -53,6 +53,7 @@ class Conjunto
 
         struct Nodo
         {
+            ~Nodo();
             // El constructor, toma el elemento al que representa el nodo.
             Nodo(const T& v):
             valor(v),izq(NULL),der(NULL){}
@@ -66,7 +67,7 @@ class Conjunto
 
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
-        Nodo* buscar_Nodo(const T& k);
+        Nodo* buscar_Nodo(const T k);
         //Nodo* buscar_valor_Nodo(const T& k);
         Nodo * padre(Nodo* q)const;
         T findMinimo(Nodo *raiz)const;
