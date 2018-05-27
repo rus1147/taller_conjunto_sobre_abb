@@ -76,7 +76,7 @@ class Conjunto
         Nodo * insertar( Nodo *nodo, int key);
         int cardinal( Nodo *nodo,int i)const;
         void inorder(Nodo *raiz);
-        Nodo * minValNodo( Nodo *nodo);
+        Nodo * minValNodo(Nodo *nodo)const;
         Nodo * eliminarNodo( Nodo *nodo,int valor);
 
         void limpiar();

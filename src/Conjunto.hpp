@@ -85,7 +85,8 @@ const T& Conjunto<T>::siguiente(const T& clave) {
 template <class T>
 const T& Conjunto<T>::minimo() const {
     Nodo*p=_raiz;
-    return findMinimo(p);
+    Nodo* n =minValNodo(p);
+    return n->valor;
 }
 template <class T>
 T Conjunto<T>::findMinimo(Nodo *raiz)const {
@@ -283,7 +284,7 @@ typename Conjunto<T>::Nodo * Conjunto<T>:: padre(Nodo* q)const {
     return papa;
 }
 template <typename T>
-typename Conjunto<T>::Nodo* Conjunto<T>:: minValNodo(Nodo *nodo) {
+typename Conjunto<T>::Nodo * Conjunto<T>:: minValNodo(Nodo *nodo)const {
     Nodo *actual= nodo;
     while(actual->izq!=NULL){
         actual=actual->izq;
