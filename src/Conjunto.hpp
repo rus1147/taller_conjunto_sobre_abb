@@ -44,6 +44,10 @@ void Conjunto<T>::insertar(const T& clave) {
 
 template <class T>
 void Conjunto<T>::remover(const T& clave) {
+    Nodo* p=_raiz;
+    Nodo*m= eliminarNodo(p,clave);
+    _raiz=m;
+    /*
     if(pertenece(clave)){
         Nodo*q=buscar_Nodo(clave);
         //es hoja
@@ -70,6 +74,7 @@ void Conjunto<T>::remover(const T& clave) {
             }
         }
     }
+     */
 }
 
 template <class T>
@@ -277,11 +282,41 @@ typename Conjunto<T>::Nodo * Conjunto<T>:: padre(Nodo* q)const {
     
     return papa;
 }
-/*
-
-
-
-
-
-
- */
+template <typename T>
+typename Conjunto<T>::Nodo* Conjunto<T>:: minValNodo(Nodo *nodo) {
+    Nodo *actual= nodo;
+    while(actual->izq!=NULL){
+        actual=actual->izq;
+    }
+    return actual;
+}
+template <typename T>
+typename Conjunto<T>::Nodo* Conjunto<T>:: eliminarNodo(Nodo *raiz,int valor){
+    //caso base
+    if(raiz==NULL){
+        return raiz;
+    }
+    if(valor<raiz->valor){
+        raiz->izq=eliminarNodo(raiz->izq,valor);
+    }else if(valor>raiz->valor){
+        raiz->der=eliminarNodo(raiz->der,valor);
+    } else{
+        //nodo con un solo hijo
+        if(raiz->izq==NULL){
+            Nodo *n=raiz->der;
+            free(raiz);
+            return n;
+        } else if(raiz->der==NULL){
+            Nodo *n=raiz->izq;
+            free(raiz);
+            return n;
+        }
+        //Nodo con 2 hijos:buscar inorder al sucesor
+        Nodo *n=minValNodo(raiz->der);
+        //copia inorder
+        raiz->valor=n->valor;
+        //borra inorder al sucesor
+        raiz->der=eliminarNodo(raiz->der,n->valor);
+    }
+    return raiz;
+}
