@@ -37,50 +37,9 @@ bool Conjunto<T>::pertenece(const T& clave) const{
 
 template <class T>
 void Conjunto<T>::insertar(const T& clave) {
-    Nodo*p=_raiz;
-    if(p==NULL){
-        Nodo * n= new Nodo(clave);
-        _raiz=n;
-    } else{
-    while(p!=NULL){
-        if(p->valor==clave){
-            break;
-        } else if(p->valor<clave){
-            if(p->der==NULL){
-            Nodo * n= new Nodo(clave);
-            p->der=n;
-            break;}
-            else{
-                p=p->der;
-                if(p->valor<clave){
-                Nodo * n= new Nodo(clave);
-                p->der=n;} else{
-                    Nodo * n= new Nodo(clave);
-                    p->izq=n;
-                }
-                break;
-            }
-        } else if(p->valor>clave){
-            if(p->izq==NULL){
-            Nodo * n= new Nodo(clave);
-            p->izq=n;
-            break;
-            } else{
-                Nodo * n= new Nodo(clave);
-                p->izq->der=n;
-                break;
-            }
-        }
-    }
-        /*
-    if(padre(p)->valor<clave){
-        Nodo * n= new Nodo(clave);
-        padre(p)->izq=n;
-    } else{
-        Nodo* n=new Nodo(clave);
-        padre(p)->der=n;
-        }*/
-    }
+    Nodo* p=_raiz;
+    Nodo *m= insertar(p,clave);
+    _raiz=m;    
 }
 
 template <class T>
@@ -228,6 +187,58 @@ typename Conjunto<T>::Nodo* Conjunto<T>::buscar_Nodo(const T k){
     }}
     return r;
 }
+// C function to search a given key in a given BST
+template <typename T>
+typename Conjunto<T>::Nodo* Conjunto<T>:: search(Nodo* raiz, int key) {
+    // Base Cases: root is null or key is present at root
+    if (raiz == NULL || raiz->valor == key)
+        return raiz;
+    
+    // Key is greater than root's key
+    if (_raiz->valor < key)
+        return search(raiz->der, key);
+    
+    // Key is smaller than root's key
+    return search(raiz->izq, key);
+}
+template <typename T>
+typename Conjunto<T>::Nodo* Conjunto<T>:: CrearNodo(  int clave) {
+    {
+        Nodo* n=new Nodo(clave);
+        /*n->valor = clave;
+        n->izq = NULL;
+        n->der = NULL;*/
+        return n;
+    }
+}
+
+template <typename T>
+typename Conjunto<T>::Nodo* Conjunto<T>:: insertar(Nodo *nodo,  int key) {
+    /* If the tree is empty, return a new node */
+    if (nodo == NULL){
+        Nodo*n= new Nodo(key);
+        nodo=n;
+        return nodo;
+    }
+    /* Otherwise, recur down the tree */
+    if (key < nodo->valor)
+        nodo->izq  = insertar(nodo->izq, key);
+    else if (key > nodo->valor)
+        nodo->der = insertar(nodo->der, key);
+    
+    /* return the (unchanged) node pointer */
+    return nodo;
+}
+/*
+template <typename T>
+void Conjunto<T>::inorder(Nodo *raiz){
+    if (raiz != NULL)
+    {
+        inorder(raiz->izq);
+        inorder(raiz->der);
+    }
+}
+*/
 /*
 template <typename T>
 typename Conjunto<T>::Nodo* Conjunto<T>::buscar_valor_Nodo(const T& k){

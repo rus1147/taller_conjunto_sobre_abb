@@ -71,6 +71,10 @@ class Conjunto
         //Nodo* buscar_valor_Nodo(const T& k);
         Nodo * padre(Nodo* q)const;
         T findMinimo(Nodo *raiz)const;
+        Nodo * search(Nodo* raiz, int key);
+        Nodo *CrearNodo( int key);
+        Nodo * insertar( Nodo *nodo, int key);
+        void inorder(Nodo *raiz);
 
         void limpiar();
 
