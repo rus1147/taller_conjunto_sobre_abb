@@ -39,7 +39,7 @@ template <class T>
 void Conjunto<T>::insertar(const T& clave) {
     Nodo* p=_raiz;
     Nodo *m= insertar(p,clave);
-    _raiz=m;    
+    _raiz=m;
 }
 
 template <class T>
@@ -122,27 +122,15 @@ unsigned int Conjunto<T>::cardinal() const {
     int j=0;
     if(r1!=NULL){
         j=1;
-    }
-    while(r1!=NULL){
-        if(r1->izq!=NULL){
-        if(r1->valor>r1->izq->valor){
-            r1=r1->izq;
-            i++;
-        }} else if(r1->der!=NULL){
-            r1=r1->der;
-            i++;
-        } else{r1=NULL;}
-    }
-    while(r2!=NULL){
-        if(r2->der!=NULL){
-        if(r2->valor<r2->der->valor){
-            r2=r2->der;
-            j++;
-        }}else if(r2->izq!=NULL){
-            r2=r2->izq;
-            j++;
-        } else{
-        r2=NULL;}
+    while (r1->izq!=NULL){
+        i=cardinal(r1->izq,i);
+        r1=r1->izq;
+        }
+    
+    while(r2->der!=NULL){
+        j=cardinal(r2->der,j);
+        r2=r2->der;
+        }
     }
     return j+i;
 }
@@ -228,6 +216,21 @@ typename Conjunto<T>::Nodo* Conjunto<T>:: insertar(Nodo *nodo,  int key) {
     
     /* return the (unchanged) node pointer */
     return nodo;
+}
+template <typename T>
+int Conjunto<T>:: cardinal(Nodo *nodo,int i)const {
+    /* If the tree is empty, return a new node */
+    if (nodo != NULL) {
+        i++;
+    /* Otherwise, recur down the tree */
+    if (nodo->izq != NULL) {
+         i = cardinal(nodo->izq,i);
+    } else if (nodo->valor != NULL) {
+     i = cardinal(nodo->der,i);
+        }
+    }
+    /* return the (unchanged) node pointer */
+    return i;
 }
 /*
 template <typename T>

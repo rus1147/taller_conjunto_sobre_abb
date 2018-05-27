@@ -74,6 +74,7 @@ class Conjunto
         Nodo * search(Nodo* raiz, int key);
         Nodo *CrearNodo( int key);
         Nodo * insertar( Nodo *nodo, int key);
+        int cardinal( Nodo *nodo,int i)const;
         void inorder(Nodo *raiz);
 
         void limpiar();
