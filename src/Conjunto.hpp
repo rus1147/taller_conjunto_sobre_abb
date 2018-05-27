@@ -79,7 +79,8 @@ void Conjunto<T>::remover(const T& clave) {
 
 template <class T>
 const T& Conjunto<T>::siguiente(const T& clave) {
-    assert(false);
+    Nodo *m=siguienteInorder(_raiz,buscar_Nodo(clave));
+    return m->valor;
 }
 
 template <class T>
@@ -117,7 +118,9 @@ T Conjunto<T>::findMinimo(Nodo *raiz)const {
 
 template <class T>
 const T& Conjunto<T>::maximo() const {
-    assert(false);
+    Nodo*p=_raiz;
+    Nodo* n =maxValNodo(p);
+    return n->valor;
 }
 
 template <class T>
@@ -215,11 +218,16 @@ typename Conjunto<T>::Nodo* Conjunto<T>:: insertar(Nodo *nodo,  int key) {
         return nodo;
     }
     /* Otherwise, recur down the tree */
-    if (key < nodo->valor)
-        nodo->izq  = insertar(nodo->izq, key);
-    else if (key > nodo->valor)
-        nodo->der = insertar(nodo->der, key);
-    
+    if (key < nodo->valor){
+        Nodo*n= insertar(nodo->izq, key);
+        nodo->izq  = n;
+        n->padre=nodo;
+    }
+    else if (key > nodo->valor) {
+        Nodo *n=insertar(nodo->der, key);
+        nodo->der = n;
+        n->padre=nodo;
+    }
     /* return the (unchanged) node pointer */
     return nodo;
 }
@@ -320,4 +328,49 @@ typename Conjunto<T>::Nodo* Conjunto<T>:: eliminarNodo(Nodo *raiz,int valor){
         raiz->der=eliminarNodo(raiz->der,n->valor);
     }
     return raiz;
+}
+template <typename T>
+typename Conjunto<T>::Nodo* Conjunto<T>:: buscarSiguiente(Nodo *nodo,  int clave) {
+    /* If the tree is empty, return a new node */
+    if(nodo->valor==clave && nodo->izq!=NULL && nodo->der!=NULL){
+        buscarSiguiente(nodo->der,clave);
+    }else{
+    if(nodo->izq!=NULL && clave<nodo->valor){
+        if(nodo->izq->der!=NULL){
+        return buscarSiguiente(nodo->der,clave);} else{
+            return nodo->izq;
+        }
+    } else if(nodo->der!=NULL && clave<nodo->valor){
+        if(nodo->izq->der!=NULL){
+            return buscarSiguiente(nodo->der,clave);} else{
+            return nodo->izq;
+        }
+    }}
+    /* Otherwise, recur down the tree
+    if (clave < nodo->valor)
+        nodo->izq  = insertar(nodo->izq, key);
+    else if (key > nodo->valor)
+        nodo->der = insertar(nodo->der, key);
+    
+    return the (unchanged) node pointer */
+}
+template <typename T>
+typename Conjunto<T>::Nodo* Conjunto<T>:: siguienteInorder(Nodo *raiz,  Nodo *n) {
+    if(n->der!=NULL){
+        return minValNodo(n->der);
+    }
+    Nodo* padre= n->padre;
+    while(padre!=NULL && n==padre->der){
+        n=padre;
+        padre=padre->padre;
+    }
+    return padre;
+}
+template <typename T>
+typename Conjunto<T>::Nodo * Conjunto<T>:: maxValNodo(Nodo *nodo)const {
+    Nodo *actual= nodo;
+    while(actual->der!=NULL){
+        actual=actual->der;
+    }
+    return actual;
 }

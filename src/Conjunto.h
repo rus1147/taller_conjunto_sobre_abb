@@ -56,13 +56,14 @@ class Conjunto
             ~Nodo();
             // El constructor, toma el elemento al que representa el nodo.
             Nodo(const T& v):
-            valor(v),izq(NULL),der(NULL){}
+            valor(v),izq(NULL),der(NULL),padre(NULL){}
             // El elemento al que representa el nodo.
             T valor;
             // Puntero a la raíz del subárbol izquierdo.
             Nodo* izq;
             // Puntero a la raíz del subárbol derecho.
-            Nodo* der; 
+            Nodo* der;
+            Nodo* padre;
         };
 
         // Puntero a la raíz de nuestro árbol.
@@ -78,6 +79,9 @@ class Conjunto
         void inorder(Nodo *raiz);
         Nodo * minValNodo(Nodo *nodo)const;
         Nodo * eliminarNodo( Nodo *nodo,int valor);
+        Nodo * buscarSiguiente( Nodo *nodo, int key);
+        Nodo * siguienteInorder( Nodo *raiz, Nodo* n);
+        Nodo * maxValNodo(Nodo *nodo)const;
 
         void limpiar();
 
