@@ -16,23 +16,13 @@ Conjunto<T>::Conjunto() {
 
 template <class T>
 Conjunto<T>::~Conjunto() {
-    if(_raiz!=NULL){
+    if(_raiz!=NULL)
         delete _raiz;
-    }
-
 }
 
 template <class T>
 bool Conjunto<T>::pertenece(const T& clave) const{
-    Nodo* r=_raiz;
-    while(r!=NULL && r->valor!=clave){
-        if(r->valor>clave){
-            r=r->izq;
-        } else{
-            r=r->der;
-        }
-    }
-    return r->valor==clave;
+    return pertenece(buscar_Nodo(clave),clave);
 }
 
 template <class T>
@@ -124,7 +114,7 @@ const T& Conjunto<T>::maximo() const {
 }
 
 template <class T>
-unsigned int Conjunto<T>::cardinal() const {
+unsigned int Conjunto<T>::cardinal() {
     Nodo* r1=_raiz;
     Nodo* r2=_raiz;
     int i=0;
@@ -150,26 +140,13 @@ void Conjunto<T>::mostrar(std::ostream&) const {
 }
 
 template <typename T>
-void Conjunto<T>::limpiar(){
-    Nodo* p=_raiz;
-    while(p!=NULL){
-        p=padre(minimo());
-        if(p->der!=NULL){
-            delete p->der;}
-        if(p->izq!=NULL) {
-            delete p->izq;
-        }
-        delete p;
-    }
-    _raiz=NULL;
-
-}
-
-template <typename T>
-typename Conjunto<T>::Nodo* Conjunto<T>::buscar_Nodo(const T k){
+typename Conjunto<T>::Nodo * Conjunto<T>::buscar_Nodo(const T k)const {
     Nodo* r=_raiz;
-    if(k==NULL){
+    if(_raiz==NULL){
         return NULL;
+    }else if(_raiz!=NULL){
+    if(k==0){
+        return _raiz;
     } else{
     while(r!=NULL){
         if(r->valor!=k){
@@ -183,7 +160,7 @@ typename Conjunto<T>::Nodo* Conjunto<T>::buscar_Nodo(const T k){
         }
     }}
     return r;
-}
+}}
 // C function to search a given key in a given BST
 template <typename T>
 typename Conjunto<T>::Nodo* Conjunto<T>:: search(Nodo* raiz, int key) {
@@ -198,16 +175,7 @@ typename Conjunto<T>::Nodo* Conjunto<T>:: search(Nodo* raiz, int key) {
     // Key is smaller than root's key
     return search(raiz->izq, key);
 }
-template <typename T>
-typename Conjunto<T>::Nodo* Conjunto<T>:: CrearNodo(  int clave) {
-    {
-        Nodo* n=new Nodo(clave);
-        /*n->valor = clave;
-        n->izq = NULL;
-        n->der = NULL;*/
-        return n;
-    }
-}
+
 
 template <typename T>
 typename Conjunto<T>::Nodo* Conjunto<T>:: insertar(Nodo *nodo,  int key) {
@@ -239,37 +207,13 @@ int Conjunto<T>:: cardinal(Nodo *nodo,int i)const {
     /* Otherwise, recur down the tree */
     if (nodo->izq != NULL) {
          i = cardinal(nodo->izq,i);
-    } else if (nodo->valor != NULL) {
+    } else if (nodo->der != NULL) {
      i = cardinal(nodo->der,i);
         }
     }
     /* return the (unchanged) node pointer */
     return i;
 }
-/*
-template <typename T>
-void Conjunto<T>::inorder(Nodo *raiz){
-    if (raiz != NULL)
-    {
-        inorder(raiz->izq);
-        inorder(raiz->der);
-    }
-}
-*/
-/*
-template <typename T>
-typename Conjunto<T>::Nodo* Conjunto<T>::buscar_valor_Nodo(const T& k){
-    Nodo* r=_raiz;
-    while(r!=NULL && r->valor!=k){
-        if(r->valor>k){
-            r=r->izq;
-        } else{
-            r=r->der;
-        }
-    }
-    return r->valor;
-}
- */
 template <typename T>
 typename Conjunto<T>::Nodo * Conjunto<T>:: padre(Nodo* q)const {
     Nodo* p=_raiz;
@@ -373,4 +317,21 @@ typename Conjunto<T>::Nodo * Conjunto<T>:: maxValNodo(Nodo *nodo)const {
         actual=actual->der;
     }
     return actual;
+}
+template <typename T>
+bool Conjunto<T>:: pertenece(Nodo *p,int clave)const {
+    if(p==NULL){
+        return false;
+    }else{
+        if(p!=NULL && p->der==NULL && p!=NULL){
+            return clave==p->valor;
+        }else{
+            if(p->valor<clave){
+                p=p->der;
+                return pertenece(clave);
+            }else if(p->valor>clave){
+                p=p->izq;
+                return pertenece(clave);
+            }
+        }}
 }

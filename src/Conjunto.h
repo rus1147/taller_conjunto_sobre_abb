@@ -40,7 +40,7 @@ class Conjunto
         const T& maximo() const;
 
         // Devuelve la cantidad de elementos que tiene el conjunto.
-        unsigned int cardinal() const;
+        unsigned int cardinal();
 
         // Muestra el conjunto.
         void mostrar(std::ostream&) const;
@@ -68,22 +68,18 @@ class Conjunto
 
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
-        Nodo* buscar_Nodo(const T k);
-        //Nodo* buscar_valor_Nodo(const T& k);
+        Nodo * buscar_Nodo(const T k)const;
         Nodo * padre(Nodo* q)const;
         T findMinimo(Nodo *raiz)const;
         Nodo * search(Nodo* raiz, int key);
-        Nodo *CrearNodo( int key);
         Nodo * insertar( Nodo *nodo, int key);
         int cardinal( Nodo *nodo,int i)const;
-        void inorder(Nodo *raiz);
         Nodo * minValNodo(Nodo *nodo)const;
         Nodo * eliminarNodo( Nodo *nodo,int valor);
         Nodo * buscarSiguiente( Nodo *nodo, int key);
         Nodo * siguienteInorder( Nodo *raiz, Nodo* n);
         Nodo * maxValNodo(Nodo *nodo)const;
-
-        void limpiar();
+        bool pertenece(Nodo *nodo, int val)const;
 
 };
 
