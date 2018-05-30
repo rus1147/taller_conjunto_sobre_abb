@@ -326,6 +326,9 @@ bool Conjunto<T>:: pertenece(Nodo *p,int clave)const {
         if(p!=NULL && p->der==NULL && p!=NULL){
             return clave==p->valor;
         }else{
+            if(p->valor==clave){
+                return true;
+            }
             if(p->valor<clave){
                 p=p->der;
                 return pertenece(clave);

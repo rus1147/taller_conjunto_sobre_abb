@@ -108,7 +108,7 @@ TEST(conjunto_test, test_siguiente_inorder) {
     EXPECT_EQ(c.siguiente(15), 16);
 }
 
-const int NCLAVES = 1000;
+const int NCLAVES = 4;
 
 int clave(int i) {
     return NCLAVES * ((i * i - 100 * i) % NCLAVES) + i;
