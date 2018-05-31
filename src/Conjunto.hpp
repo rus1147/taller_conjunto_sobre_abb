@@ -125,7 +125,7 @@ unsigned int Conjunto<T>::cardinal() {
         i=cardinal(r1->izq,i);
         r1=r1->izq;
         }
-    
+
     while(r2->der!=NULL){
         j=cardinal(r2->der,j);
         r2=r2->der;
@@ -133,6 +133,15 @@ unsigned int Conjunto<T>::cardinal() {
     }
     return j+i;
 }
+/**
+ *     recursiva(_raiz);
+}
+
+template <class T>
+unsigned int Conjunto<T>::recursiva(Conjunto<T>::Nodo* p) {
+    if (p == NULL) return 0;
+    return 1 + recursiva(p->der) + recursiva(p->izq);
+}*/
 
 template <class T>
 void Conjunto<T>::mostrar(std::ostream&) const {
@@ -326,9 +335,9 @@ bool Conjunto<T>:: pertenece(Nodo *p,int clave)const {
         if(p!=NULL && p->der==NULL && p!=NULL){
             return clave==p->valor;
         }else{
-            if(p->valor==clave){
+            /*if(p->valor==clave){
                 return true;
-            }
+            }*/
             if(p->valor<clave){
                 p=p->der;
                 return pertenece(clave);
