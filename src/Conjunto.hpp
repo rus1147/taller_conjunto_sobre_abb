@@ -3,10 +3,10 @@
 template <class T>
 Conjunto<T>::Nodo::~Nodo() {
     if(izq!=NULL){
-        delete izq;
+        delete (izq);
     }
     if(der!=NULL){
-        delete der;
+        delete (der);
     }
 }
 template <class T>
@@ -17,7 +17,7 @@ Conjunto<T>::Conjunto() {
 template <class T>
 Conjunto<T>::~Conjunto() {
     if(_raiz!=NULL)
-        delete _raiz;
+        delete (_raiz);
 }
 
 template <class T>
@@ -37,34 +37,6 @@ void Conjunto<T>::remover(const T& clave) {
     Nodo* p=_raiz;
     Nodo*m= eliminarNodo(p,clave);
     _raiz=m;
-    /*
-    if(pertenece(clave)){
-        Nodo*q=buscar_Nodo(clave);
-        //es hoja
-        if(q->der==NULL && q->izq==NULL){
-            delete q;
-            _raiz=NULL;
-        }//1 hoja
-        if(q->der!=NULL){
-            delete q->der;
-        } else if(q->izq!=NULL){
-            delete q->izq;
-        } //2 hojas
-        if(q->der!=NULL && q->izq!=NULL){
-            if(q->der->valor>clave){
-                Nodo*p=q->der->der;
-                p->izq=q->izq;
-                p->der=q->der;
-                delete q;
-            } else if((q->izq->valor <clave)){
-                Nodo*p=q->izq->izq;
-                p->der =q->der;
-                p->izq=q->izq;
-                delete q;
-            }
-        }
-    }
-     */
 }
 
 template <class T>
@@ -166,8 +138,7 @@ typename Conjunto<T>::Nodo* Conjunto<T>:: insertar(Nodo *nodo,  int key) {
     /* If the tree is empty, return a new node */
     if (nodo == NULL){
         Nodo*n= new Nodo(key);
-        nodo=n;
-        return nodo;
+        return n;
     }
     /* Otherwise, recur down the tree */
     if (key < nodo->valor){
@@ -201,7 +172,12 @@ typename Conjunto<T>::Nodo* Conjunto<T>:: eliminarNodo(Nodo *raiz,int valor){
         raiz->izq=eliminarNodo(raiz->izq,valor);
     }else if(valor>raiz->valor){
         raiz->der=eliminarNodo(raiz->der,valor);
-    } else{
+    }
+    else if(raiz->valor==valor &&raiz->izq==NULL && raiz->der==NULL){
+        delete(raiz);
+        return NULL;
+    }
+            else{
         //nodo con un solo hijo
         if(raiz->izq==NULL){
             Nodo *n=raiz->der;
