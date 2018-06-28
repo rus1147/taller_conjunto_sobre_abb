@@ -180,12 +180,16 @@ typename Conjunto<T>::Nodo* Conjunto<T>:: eliminarNodo(Nodo *raiz,int valor){
             else{
         //nodo con un solo hijo
         if(raiz->izq==NULL){
-            Nodo *n=raiz->der;
-            free(raiz);
+            Nodo *n=raiz->izq;
+            raiz->padre->izq=n;
+            raiz->der=raiz->izq=NULL;
+            delete(raiz);
             return n;
         } else if(raiz->der==NULL){
-            Nodo *n=raiz->izq;
-            free(raiz);
+            Nodo *n=raiz->der;
+            raiz->padre->der=n;
+            raiz->der=raiz->izq=NULL;
+            delete(raiz);
             return n;
         }
         //Nodo con 2 hijos:buscar inorder al sucesor

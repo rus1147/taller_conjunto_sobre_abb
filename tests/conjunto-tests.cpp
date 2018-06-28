@@ -5,6 +5,7 @@
 /**
  * Test simple básico
  */
+/*
 TEST(conjunto_test, conjunto_vacio) {
     Conjunto<int> c;
     EXPECT_EQ(c.cardinal(), 0);
@@ -55,7 +56,7 @@ TEST(conjunto_test, test_maximo) {
     c.insertar(8);
     EXPECT_EQ(c.maximo(), 8);
 }
-
+*/
 TEST(conjunto_test, test_remover_caso_un_hijo) {
     Conjunto<int> c;
     c.insertar(5);
@@ -75,7 +76,7 @@ TEST(conjunto_test, test_remover_caso_dos_hijos_simple) {
     c.remover(7);
     EXPECT_EQ(c.cardinal(), 4);
 }
-
+/*
 TEST(conjunto_test, test_remover_caso_dos_hijos_doble) {
     Conjunto<int> c;
     c.insertar(5);
@@ -208,3 +209,4 @@ TEST(conjunto_test, pertenece_val1) {
     ASSERT_FALSE(c.pertenece(3));
 }
 /// TODO: Escribir tests de todas las implementaciones
+*/
